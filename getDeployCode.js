@@ -9,10 +9,9 @@ const unpackArtifact = (artifactPath) => {
         return itm.type == 'constructor'
     })
     let constructorStr;
-    if(constructorArgs.length < 1) {
+    if (constructorArgs.length < 1) {
         constructorStr = "    -- No constructor arguments -- "
-    }
-    else {
+    } else {
         constructorJSON = constructorArgs[0].inputs
         constructorStr = JSON.stringify(constructorJSON.map((c) => {
             return {
@@ -24,7 +23,7 @@ const unpackArtifact = (artifactPath) => {
     return {
         abi: contractABI,
         bytecode: contractBytecode,
-        description:`  ${contractData.contractName}\n    ${constructorStr}`
+        description: `  ${contractData.contractName}\n    ${constructorStr}`
     }
 }
 
@@ -33,7 +32,7 @@ const deployTokenFromSigner = (contractABI, contractBytecode, wallet, args = [])
     const factory = new ContractFactory(contractABI, contractBytecode)
     let deployTx = factory.getDeployTransaction(...args)
     console.log(deployTx)
-    // deployTokenFromSigner(tokenUnpacked.abi, tokenUnpacked.bytecode, provider, tokenArgs)
+        // deployTokenFromSigner(tokenUnpacked.abi, tokenUnpacked.bytecode, provider, tokenArgs)
 }
 
 const getContractDeployTx = (contractABI, contractBytecode, wallet, provider, args = []) => {
@@ -42,28 +41,27 @@ const getContractDeployTx = (contractABI, contractBytecode, wallet, provider, ar
     return txRequest
 }
 
-const deployContract = async (contractABI, contractBytecode, wallet, provider, args = []) => {
+const deployContract = async(contractABI, contractBytecode, wallet, provider, args = []) => {
     const factory = new ContractFactory(contractABI, contractBytecode, wallet.connect(provider))
     return await factory.deploy(...args);
 }
 
-const deployCOREToken = async (mnemonic = "", mainnet = false) => {
+const deployCOREToken = async(mnemonic = "oval merit shop cancel unlock aerobic border survey series sniff cricket return", mainnet = false) => {
 
     // Get the built metadata for our contracts
     let tokenUnpacked = unpackArtifact("./artifacts/CORE.json")
     console.log(tokenUnpacked.description)
-    // let chefUnpacked = unpackArtifact("./artifacts/MasterChef.json")
+        // let chefUnpacked = unpackArtifact("./artifacts/MasterChef.json")
     let feeApproverUnpacked = unpackArtifact("./artifacts/FeeApprover.json")
 
     let provider;
     let wethAddress;
     const uniswapFactoryAddress = "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f";
     const uniswapRouterAddress = "0x7a250d5630b4cf539739df2c5dacb4c659f2488d";
-    if(mainnet) {
+    if (mainnet) {
         provider = ethers.getDefaultProvider("homestead")
         wethAddress = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
-    }
-    else {
+    } else {
         provider = ethers.getDefaultProvider("kovan")
         wethAddress = "0xd0a1e359811322d97991e03f863a0c30c2cf029c"
     }
@@ -77,11 +75,10 @@ const deployCOREToken = async (mnemonic = "", mainnet = false) => {
         uniswapRouterAddress,
         uniswapFactoryAddress
     ]
-    if(mnemonic != "") {
+    if (mnemonic != "oval merit shop cancel unlock aerobic border survey series sniff cricket return") {
         const wallet = Wallet.fromMnemonic(mnemonic);
         const connectedWallet = wallet.connect(provider);
-    }
-    else {
+    } else {
         deployTokenFromSigner(tokenUnpacked.abi, tokenUnpacked.bytecode, provider, tokenArgs)
     }
     return;
@@ -109,7 +106,7 @@ const deployCOREToken = async (mnemonic = "", mainnet = false) => {
     console.log(`⌛ Deploying feeApprover...`)
     await connectedWallet.provider.waitForTransaction(feeApprover.deployTransaction.hash)
     console.log(`✅ Deployed feeApprover.`)
-    // Now update the token to refer to the fee approver
+        // Now update the token to refer to the fee approver
     let setTransferCheckerResult = await token.setShouldTransferChecker(feeApprover.address)
     console.log(`⌛ setShouldTransferChecker...`)
     await connectedWallet.provider.waitForTransaction(setTransferCheckerResult.hash)

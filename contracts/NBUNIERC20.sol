@@ -18,7 +18,7 @@ import "./uniswapv2/interfaces/IWETH.sol";
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-// import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 /**
  * @dev Implementation of the {IERC20} interface.
@@ -72,8 +72,8 @@ contract NBUNIERC20 is Context, INBUNIERC20, Ownable {
     }
 
     function initialSetup(address router, address factory) internal {
-        _name = "cVault.finance";
-        _symbol = "CORE";
+        _name = "boostedCore.finance";
+        _symbol = "bCORE";
         _decimals = 18;
         _mint(address(this), initialSupply);
         contractStartTimestamp = block.timestamp;
@@ -193,7 +193,7 @@ contract NBUNIERC20 is Context, INBUNIERC20, Ownable {
     // 3) Failure to create LP tokens, addressed with checks
     // 4) Unacceptable division errors . Addressed with multiplications by 1e18
     // 5) Pair not set - impossible since its set in constructor
-    function addLiquidityToUniswapCORExWETHPair() public {
+    function addLiquidityToUniswapbCORExWETHPair() public {
         require(liquidityGenerationOngoing() == false, "Liquidity generation onging");
         require(LPGenerationCompleted == false, "Liquidity generation already finished");
         totalETHContributed = address(this).balance;

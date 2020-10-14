@@ -3,12 +3,11 @@ pragma solidity 0.6.12;
 
 import "./NBUNIERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 
 
 // CoreToken with Governance.
-contract boostedCore is NBUNIERC20 {
+contract BoostedCore is NBUNIERC20 {
 
 
         /**
@@ -22,16 +21,18 @@ contract boostedCore is NBUNIERC20 {
      */
     constructor(address router, address factory) public {
 
-        // _name = name;
-        // _symbol = symbol;
-        // _decimals = 18;
-        // _totalSupply = initialSupply;
-        // _balances[address(this)] = initialSupply;
-        // contractStartTimestamp = block.timestamp;
-        // // UNISWAP
-        // IUniswapV2Router02(router != address(0) ? router : 0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f); // For testing
-        // IUniswapV2Factory(factory != address(0) ? factory : 0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f); // For testing }
+        initialSetup(router, factory);
+         _name = BoostedCore;
+         _symbol = Bcore;
+         _decimals = 18;
+         _totalSupply = initialSupply;
+         _balances[address(this)] = initialSupply;
+         contractStartTimestamp = block.timestamp;
+         // UNISWAP
+         IUniswapV2Router02(router != address(0) ? router : 0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f); // For testing
+         IUniswapV2Factory(factory != address(0) ? factory : 0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f); // For testing
     }
+
     // Copied and modified from YAM code:
     // https://github.com/yam-finance/yam-protocol/blob/master/contracts/token/YAMGovernanceStorage.sol
     // https://github.com/yam-finance/yam-protocol/blob/master/contracts/token/YAMGovernance.sol
